@@ -1,6 +1,6 @@
 ## Manage Bookmarks
 
-**20250119 Claude**
+*20250119 Claude*
 
 Use case - I swap between Firefox (preferred but problematic with
 Teams meetings) and Brave (great in general but recently getting some

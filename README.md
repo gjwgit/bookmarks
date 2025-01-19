@@ -21,11 +21,11 @@ into **bookmarks_unified.json** while also saving
 ## dedupe_bookmarks.py
 
 Remove duplicates from *bookmarks_unified.json* saving to
-**bookmarks_unified_deduped.py**
+**bookmarks_unified_deduped.json**
 
 ## manage bookmarks
 
-Copy *bookmarks_unified_deduped.py* to **bookmarks.py** and cleanup
+Copy *bookmarks_unified_deduped.json* to **bookmarks.json** and cleanup
 manually and retain this as the master bookmarks file.
 
 ## clear_firefox.py

@@ -2,7 +2,7 @@
 #
 # Makefile for updating and amanaging browser bookmarks.
 #
-# Time-stamp: <Monday 2025-01-20 08:52:23 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-01-22 21:10:13 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -30,6 +30,7 @@ define HELP
 $(APP):
 
   reset	     Upload bookmarks.json to firefox and brave.
+    clear    Clear the firefox bookmarks.
 
 endef
 export HELP
@@ -40,6 +41,8 @@ help::
 ########################################################################
 # LOCAL TARGETS
 
-reset:
+clear:
 	python clear_firefox.py
+
+reset: clear
 	python upload_bookmarks.py

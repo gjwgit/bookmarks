@@ -3,6 +3,30 @@ import os
 from pathlib import Path
 import shutil
 from datetime import datetime
+import subprocess
+
+# def is_firefox_running():
+#     try:
+#         # Using pgrep to search for firefox process
+#         subprocess.check_output(["pgrep", "firefox"])
+#         return True
+#     except subprocess.CalledProcessError:
+#         # Process not found
+#         return False
+
+def is_firefox_running():
+    try:
+        # Get PIDs of Firefox processes
+        pids = subprocess.check_output(["pgrep", "firefox"]).decode().strip().split('\n')
+
+        for pid in pids:
+            # Check state of each process
+            state = subprocess.check_output(["ps", "-o", "stat=", "-p", pid]).decode().strip()
+            if 'Z' not in state:
+                return True  # Found at least one non-zombie Firefox
+        return False
+    except subprocess.CalledProcessError:
+        return False  # No Firefox processes found
 
 def clear_firefox_bookmarks():
     """Clear all Firefox bookmarks but preserve the essential structure."""
@@ -103,9 +127,12 @@ def clear_firefox_bookmarks():
             os.remove(temp_db)
 
 def main():
-    print("WARNING: This will delete all Firefox bookmarks!")
-    print("A backup will be created, but please make sure Firefox is closed.")
-    confirmation = input("Are you sure you want to proceed? (type 'yes' to confirm): ")
+    confirmation = 'yes'
+
+    if is_firefox_running():
+        print("WARNING: This will delete all Firefox bookmarks!")
+        print("A backup will be created, but please make sure Firefox is closed.")
+        confirmation = input("Are you sure you want to proceed? (type 'yes' to confirm): ")
 
     if confirmation.lower() == 'yes':
         try:
@@ -113,7 +140,8 @@ def main():
         except Exception as e:
             print(f"Error: {str(e)}")
     else:
-        print("Operation cancelled.")
+        print("Firefox bookmarks removal cancelled.")
+        exit(1)
 
 if __name__ == "__main__":
     main()
